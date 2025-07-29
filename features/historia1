@@ -13,37 +13,38 @@ Feature: Transferencias nacionales
     And el país destino no está restringido
     When el usuario confirma la operación
     Then el sistema efectúa la transferencia exitosamente
-    And se muestra mensaje de éxito
+    And se muestra un mensaje de éxito
 
   Scenario: Transferencia rechazada por monto insuficiente
     Given el usuario solicita una transferencia nacional de 1.000 euros o menos
     When el usuario confirma la operación
     Then el sistema rechaza la transferencia
-    And se muestra mensaje indicando que el monto mínimo es superior a 1.000 euros
+    And se muestra un mensaje indicando que el monto mínimo es superior a 1.000 euros
 
   Scenario: Transferencia que requiere verificación OTP
     Given el usuario solicita una transferencia nacional superior a 50.000 euros
     And el país destino no está restringido
     When el usuario confirma la operación
     Then el sistema solicita OTP y lo envía por SMS
+
     When el usuario introduce el OTP válido en menos de 5 minutos
     Then el sistema efectúa la transferencia exitosamente
-    And se muestra mensaje de éxito
+    And se muestra un mensaje de éxito
 
   Scenario: OTP expirado
     Given el sistema solicita OTP para una transferencia superior a 50.000 euros
     When el usuario introduce el OTP después de 5 minutos
     Then el sistema rechaza la transferencia
-    And se muestra mensaje de OTP expirado
+    And se muestra un mensaje de OTP expirado
 
   Scenario: Transferencia rechazada por teléfono no español
     Given el usuario tiene un número de teléfono no español
     When solicita una transferencia nacional
     Then el sistema rechaza la operación
-    And se muestra mensaje indicando que el teléfono debe ser español
+    And se muestra un mensaje indicando que el teléfono debe ser español
 
   Scenario: Transferencia rechazada por país destino restringido
     Given el usuario solicita una transferencia nacional a país restringido
     When confirma la operación
     Then el sistema rechaza la transferencia
-    And se muestra mensaje indicando restricción de país
+    And se muestra un mensaje indicando restricción de país
